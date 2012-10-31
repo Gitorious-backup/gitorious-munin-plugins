@@ -1,0 +1,5 @@
+* Munin plugins for Gitorious
+  This gem provides a set of Munin plugins to be used on a Gitorious
+  server. Each plugin is provided as a binary that can be symlinked
+  into =/etc/munin/plugins= on your server.
+** Gitorious configuration must in /etc/gitorious.conf
