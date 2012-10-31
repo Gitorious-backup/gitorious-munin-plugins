@@ -1,81 +1,14 @@
 #!/usr/bin/env ruby
 require "gitorious-munin-plugins"
 require "gitorious-munin-plugins/database"
-
-class Plugin
-  def self.all
-    root.children.collect do |plugin|
-      name = plugin.basename.to_s.sub(/\.rb/, "")
-      new(name)
-    end
-  end
-
-  # Root of all plugins
-  def self.root
-    Pathname(File.dirname(__FILE__)) + "../lib/gitorious-munin-plugins/plugins"
-  end
+require "gitorious-munin-plugins/cli"
+require "gitorious-munin-plugins/plugin"
 
 
-  attr_reader :name
-  def initialize(name)
-    @name = name
-  end
-
-  # Is there a symlink to us in /etc/munin/plugins ?
-  def installed?
-    File.exist?("/etc/munin/plugins/#{name}")
-  end
-
-  def install_status
-    installed? ? "installed" : "not installed"
-  end
-
-  def named?(given)
-    name == given
-  end
-
-  def description
-    "#{name} [#{install_status}]"
-  end
-end
-
-class Cli
-  attr_reader :plugins, :called_as
-
-  def initialize(plugins, called_as)
-    @plugins = plugins
-    @called_as = called_as
-  end
-
-  def run
-    if plugins.any? {|plugin| plugin.named?(called_as)}
-      load_plugin(called_as)
-    else
-      display_usage
-    end
-  end
-
-  def display_usage
-    msg = ["You need to run me as a symlink"]
-    msg << "I know of these plugins:"
-    plugins.each do |p|
-      msg << "- #{p.description}"
-    end
-    fail_with_message(msg.join("\n"))
-  end
-
-  def fail_with_message(message)
-    puts message
-    exit 1
-  end
-
-  def load_plugin(name)
-    load Plugin.root.realpath + "#{name}.rb"
-  end
-end
 
 
-all_plugins = Plugin.all
+
+all_plugins = GitoriousMuninPlugins::Plugin.all
 called_as = Pathname($0).basename.to_s
-cli = Cli.new(all_plugins, called_as)
+cli = GitoriousMuninPlugins::Cli.new(all_plugins, called_as)
 cli.run

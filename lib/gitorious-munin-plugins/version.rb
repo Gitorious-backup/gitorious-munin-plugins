@@ -1,3 +1,3 @@
 module GitoriousMuninPlugins
-  VERSION = "0.9.1"
+  VERSION = "0.9.11"
 end

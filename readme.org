@@ -2,4 +2,49 @@
   This gem provides a set of Munin plugins to be used on a Gitorious
   server. Each plugin is provided as a binary that can be symlinked
   into =/etc/munin/plugins= on your server.
+** Usage
+   This gem ships with a single binary, =gitorious-munin-plugin=,
+   which is installed as a Gem binary. Running this command "normally"
+   (ie. =gitorious-munin-plugin=) will list which plugins are included
+   with the gem, and whether they have been installed as Munin plugins
+   on your machine.
+
+   In order to install one of these plugins, for example the
+   =gitorious_ssh_keys= plugin, you need to create a symlink to the
+   gitorious-munin-plugin by the name of the plugin you want it
+   installed as:
+
+#+BEGIN_SRC shell-script
+% ln -s `which gitorious-munin-plugin` /etc/munin/plugins/gitorious_ssh_keys
+#+END_SRC
+
+   After doing so you can run the command directly
+   (=gitorious-munin-plugin=) to verify that the plugin has been
+   installed.
+
+** How does it work?
+   This is actually a trick I've meant to use since the first time I
+   saw it used. When the binary (=gitorious-munin-plugin=) is run, I
+   check what it was called as - the =$0= variable. If the script was
+   called by its real name (=__FILE__=) we display the usage
+   instructions (along with a list of known plugins and whether they
+   have been installed or not), otherwise we attempt to load a plugin
+   from =lib/gitorious-munin-plugins/plugins= in the gem. So to not
+   have to pollute your server with a number of binaries, potentially
+   conflicting with other binaries, we supply a single binary and call
+   it by many names. Time will show whether this is a good idea or
+   not...
+
 ** Gitorious configuration must in /etc/gitorious.conf
+   This plugin needs to know how to connect to your Gitorious
+   database, and it will need the file =/etc/gitorious.conf= to be
+   present on your server. This file should be in a format that makes
+   it possible to source it from shell scripts, and it needs to
+   contain at least:
+
+#+BEGIN_EXAMPLE
+GITORIOUS_ROOT=/path/to/gitorious
+#+END_EXAMPLE
+
+   pointing to where Gitorious is installed. You may also supply a
+   =RAILS_ENV= in there to not use the default of =production=.
