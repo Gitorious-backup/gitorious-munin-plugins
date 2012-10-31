@@ -16,11 +16,14 @@ module GitoriousMuninPlugins
     end
 
     def display_usage
-      msg = ["You need to run me as a symlink"]
-      msg << "I know of these plugins:"
+      msg = [Term::ANSIColor.bold { "Munin plugins for Gitorious, symlink to me in /etc/munin/plugins/"} ]
+      msg << ""
+      msg << "I may be called by these names:"
       plugins.each do |p|
         msg << "- #{p.description}"
       end
+      msg << ""
+
       fail_with_message(msg.join("\n"))
     end
 

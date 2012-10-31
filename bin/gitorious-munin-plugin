@@ -3,6 +3,7 @@ require "gitorious-munin-plugins"
 require "gitorious-munin-plugins/database"
 require "gitorious-munin-plugins/cli"
 require "gitorious-munin-plugins/plugin"
+require "term/ansicolor"
 
 
 

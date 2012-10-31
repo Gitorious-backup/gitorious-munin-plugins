@@ -22,16 +22,20 @@ module GitoriousMuninPlugins
       File.exist?("/etc/munin/plugins/#{name}")
     end
 
-    def install_status
-      installed? ? "installed" : "not installed"
-    end
-
     def named?(given)
       name == given
     end
 
+    def install_status
+      if installed?
+        Term::ANSIColor.green {"(installed)"}
+      else
+        Term::ANSIColor.red {"(not installed)"}
+      end
+    end
+
     def description
-      "#{name} [#{install_status}]"
+      "#{name} #{install_status}"
     end
   end
 end

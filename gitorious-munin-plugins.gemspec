@@ -15,4 +15,5 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency "mysql", "~> 2.8"
+  s.add_dependency "term-ansicolor", "~> 1.0"
 end
