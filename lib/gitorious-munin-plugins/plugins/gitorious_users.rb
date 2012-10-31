@@ -1,7 +1,3 @@
-#!/usr/bin/env ruby
-require "gitorious-munin-plugins"
-require "gitorious-munin-plugins/database"
-
 database =  GitoriousMuninPlugins::Database.new
 
 cmd = ARGV.shift
