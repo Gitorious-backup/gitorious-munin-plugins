@@ -14,7 +14,7 @@ module GitoriousMuninPlugins
 
     # The binary, used as a target for Munin symlinks
     def binary
-      Gem.bin_path('gitorious-munin-plugins', 'gitorious-munin-plugin', VERSION)
+      `which gitorious-munin-plugin`.chomp
     end
 
     # Where the symlink should be placed
