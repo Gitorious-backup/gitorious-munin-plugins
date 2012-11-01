@@ -4,23 +4,17 @@
   into =/etc/munin/plugins= on your server.
 ** Usage
    This gem ships with a single binary, =gitorious-munin-plugin=,
-   which is installed as a Gem binary. Running this command "normally"
-   (ie. =gitorious-munin-plugin=) will list which plugins are included
-   with the gem, and whether they have been installed as Munin plugins
-   on your machine.
+   which is installed as a Gem binary. Run this command "normally"
+   with the =-h= switch to see options (ie. =gitorious-munin-plugin -h=).
 
-   In order to install one of these plugins, for example the
-   =gitorious_ssh_keys= plugin, you need to create a symlink to the
-   gitorious-munin-plugin by the name of the plugin you want it
-   installed as:
 
-#+BEGIN_SRC shell-script
-% ln -s `which gitorious-munin-plugin` /etc/munin/plugins/gitorious_ssh_keys
-#+END_SRC
+   Run it with the =-s= option to list which plugins are included with
+   the gem, and whether they have been installed as Munin plugins on
+   your machine.
 
-   After doing so you can run the command directly
-   (=gitorious-munin-plugin=) to verify that the plugin has been
-   installed.
+   In order to install one of these plugins, run the script with the
+   =-i PLUGIN= switch to install =PLUGIN=, and use the =-u= switch to
+   uninstall.
 
 ** How does it work?
    This is actually a trick I've meant to use since the first time I
