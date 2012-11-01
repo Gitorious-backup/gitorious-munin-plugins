@@ -1,9 +1,12 @@
 #!/usr/bin/env ruby
 require "gitorious-munin-plugins"
+require "gitorious-munin-plugins/version"
 require "gitorious-munin-plugins/database"
 require "gitorious-munin-plugins/cli"
 require "gitorious-munin-plugins/plugin"
+require "gitorious-munin-plugins/usage_plugin"
 require "term/ansicolor"
+require "trollop"
 
 
 

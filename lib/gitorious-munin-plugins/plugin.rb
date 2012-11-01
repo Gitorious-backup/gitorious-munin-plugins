@@ -12,6 +12,34 @@ module GitoriousMuninPlugins
       Pathname(File.dirname(__FILE__)) + "plugins"
     end
 
+    # The binary, used as a target for Munin symlinks
+    def binary
+      (self.class.root + "../../../bin/gitorious-munin-plugin").realpath
+    end
+
+    # Where the symlink should be placed
+    def target
+      Pathname("/etc/munin/plugins/#{name}")
+    end
+
+    def install!
+      if target.exist?
+        puts "#{target} exists, ignoring"
+      else
+        puts "Installing #{target}"
+        target.make_symlink(binary)
+      end
+    end
+
+    def uninstall!
+      if target.exist?
+        puts "Deleting #{target}"
+        target.delete
+      else
+        puts "#{target} exists"
+      end
+    end
+
     attr_reader :name
     def initialize(name)
       @name = name
