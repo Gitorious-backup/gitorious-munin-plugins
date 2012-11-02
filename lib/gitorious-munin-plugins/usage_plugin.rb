@@ -15,8 +15,8 @@ Usage:
 where [options] are:
 EOS
         opt :status, "List install status of plugins"
-        opt :install, "Install PACKAGE1 PACKAGE2"
-        opt :uninstall, "Uninstall PACKAGE1 PACKAGE2 "
+        opt :install, "Install PACKAGE1 PACKAGE2. Specify 'all' to install all plugins"
+        opt :uninstall, "Uninstall PACKAGE1 PACKAGE2. Specify 'all' to uninstall all plugins "
       end
 
       if global_options[:status_given]
@@ -28,7 +28,8 @@ EOS
       end
     end
 
-    def install_plugins(plugins)
+    def install_plugins(plugin_spec)
+      plugins = extract_plugins_from_spec(plugin_spec)
       plugins.each do |p|
         if plugin = @known_plugins.detect {|_p| _p.named?(p)}
           plugin.install!
@@ -38,13 +39,22 @@ EOS
       end
     end
 
-    def uninstall_plugins(plugins)
+    def uninstall_plugins(plugin_spec)
+      plugins = extract_plugins_from_spec(plugin_spec)
       plugins.each do |p|
         if plugin = @known_plugins.detect {|_p| _p.named?(p)}
           plugin.uninstall!
         else
           puts "Ignoring #{p}"
         end
+      end
+    end
+
+    def extract_plugins_from_spec(spec)
+      if spec.first == "all"
+        @known_plugins.map(&:name)
+      else
+        return spec
       end
     end
 
