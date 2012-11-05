@@ -9,16 +9,26 @@ module GitoriousMuninPlugins
 
     def load_configuration
       begin
-        gitorious_conf = File.read("/etc/gitorious.conf")
-        dir = gitorious_conf.scan(/^GITORIOUS_HOME=(.*)$/).flatten.first
-        raise NotFound, "/etc/gitorious.conf was found, but no GITORIOUS_HOME was defined" unless dir
-        rails_env = gitorious_conf.scan(/^RAILS_ENV=(.*)$/).flatten.first || "production"
+        dir = gitorious_conf("GITORIOUS_HOME")
+        rails_env = gitorious_conf("RAILS_ENV") || "production"
         database_yaml = Pathname(dir) + "config/database.yml"
         raise NotFound, "No database.yml found in #{database_yml}" unless database_yaml.exist?
         YAML::load_file(database_yaml)[rails_env]
       rescue Errno::ENOENT
         raise NotFound, "Gitorious configuration file /etc/gitorious.conf was not found, exiting"
       end
+    end
+
+    def gitorious_config
+      yaml_file = gitorious_conf("GITORIOUS_HOME")
+      gitorious_yml = Pathname(gitorious_conf("GITORIOUS_HOME")) + "config/gitorious.yml"
+      YAML::load_file(gitorious_yml)[gitorious_conf("RAILS_ENV")]
+    end
+
+    # Fetch line matching #{key}= in /etc/gitorious.conf
+    def gitorious_conf(key)
+      config_file = File.read("/etc/gitorious.conf")
+      config_file.scan(/^#{key}=(.*)$/).flatten.first
     end
 
     def select(sql)
