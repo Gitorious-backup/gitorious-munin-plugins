@@ -2,9 +2,11 @@ module GitoriousMuninPlugins
   class Plugin
     def self.all
       root.children.collect do |plugin|
-        name = plugin.basename.to_s.sub(/\.rb/, "")
-        new(name)
-      end
+        if plugin.basename.to_s.split(".").last == "rb"
+          name = plugin.basename.to_s.sub(/\.rb/, "")
+          new(name)
+        end
+      end.compact
     end
 
     # Root of all plugins
