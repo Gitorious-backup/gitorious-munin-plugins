@@ -6,6 +6,7 @@ require "gitorious-munin-plugins/config"
 require "gitorious-munin-plugins/cli"
 require "gitorious-munin-plugins/plugin"
 require "gitorious-munin-plugins/usage_plugin"
+require "gitorious-munin-plugins/memory_gauge"
 require "term/ansicolor"
 require "trollop"
 
