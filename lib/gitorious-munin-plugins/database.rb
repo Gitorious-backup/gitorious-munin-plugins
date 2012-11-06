@@ -9,11 +9,7 @@ module GitoriousMuninPlugins
     end
 
     def load_database_configuration
-      begin
-        YAML::load_file(@config.database_yaml)[@config.rails_env]
-      rescue Errno::ENOENT
-        raise NotFound, "Gitorious configuration file /etc/gitorious.conf was not found, exiting"
-      end
+      YAML::load_file(@config.database_yaml)[@config.rails_env]
     end
 
     def database_connection
@@ -24,14 +20,13 @@ module GitoriousMuninPlugins
     end
 
     def select(sql)
+      conn = database_connection
       begin
-        conn = database_connection
         conn.query(sql)
       ensure
         conn.close
       end
     end
 
-    class NotFound < StandardError; end
   end
 end
