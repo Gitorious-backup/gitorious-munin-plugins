@@ -4,8 +4,8 @@ module GitoriousMuninPlugins
 
     def gitorious_config
       yaml_file = fetch("GITORIOUS_HOME")
-      gitorious_yml = Pathname(fetch("GITORIOUS_HOME")) + "config/gitorious.yml"
-      YAML::load_file(gitorious_yml)[fetch("RAILS_ENV")]
+      gitorious_yml = gitorious_home + "config/gitorious.yml"
+      YAML::load_file(gitorious_yml)[rails_env]
     end
 
     def rails_env
