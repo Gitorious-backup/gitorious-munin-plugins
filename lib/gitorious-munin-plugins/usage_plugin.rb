@@ -17,6 +17,7 @@ EOS
         opt :status, "List install status of plugins"
         opt :install, "Install PACKAGE1 PACKAGE2. Specify 'all' to install all plugins"
         opt :uninstall, "Uninstall PACKAGE1 PACKAGE2. Specify 'all' to uninstall all plugins "
+        opt :try, "Try running PACKAGE"
       end
 
       if global_options[:status_given]
@@ -25,6 +26,8 @@ EOS
         install_plugins(ARGV)
       elsif global_options[:uninstall_given]
         uninstall_plugins(ARGV)
+      elsif global_options[:try_given]
+        try_running(ARGV)
       end
     end
 
@@ -48,6 +51,10 @@ EOS
           puts "Ignoring #{p}"
         end
       end
+    end
+
+    def try_running(name)
+      load Plugin.root.realpath + "#{name}.rb"
     end
 
     def extract_plugins_from_spec(spec)

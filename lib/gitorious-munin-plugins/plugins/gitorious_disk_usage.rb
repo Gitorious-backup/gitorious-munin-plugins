@@ -1,9 +1,9 @@
-database = GitoriousMuninPlugins::Database.new
-config = database.gitorious_config
+config = GitoriousMuninPlugins::Config.new
+GitoriousConfig = config.gitorious_config
 Directories = {
-  "cache_dir" => config["archive_cache_dir"],
-  "working_dir" => config["archive_work_dir"],
-  "repo_root" => config["repository_base_path"]
+  "cache_dir" => GitoriousConfig["archive_cache_dir"],
+  "working_dir" => GitoriousConfig["archive_work_dir"],
+  "repo_root" => GitoriousConfig["repository_base_path"]
 }
 def disk_usage(key)
   dir = Directories[key]
