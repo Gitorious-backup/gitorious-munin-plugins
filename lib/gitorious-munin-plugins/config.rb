@@ -12,9 +12,13 @@ module GitoriousMuninPlugins
       @rails_env ||= fetch("RAILS_ENV", "production")
     end
 
+    def gitorious_home
+      path = fetch("GITORIOUS_HOME")
+      Pathname(path)
+    end
+
     def database_yaml
-      dir = fetch("GITORIOUS_HOME")
-      database_yaml = Pathname(dir) + "config/database.yml"
+      database_yaml = gitorious_home + "config/database.yml"
       raise NotFound, "No database.yml found in #{database_yml}" unless database_yaml.exist?
       database_yaml
     end
