@@ -29,7 +29,7 @@
    it by many names. Time will show whether this is a good idea or
    not...
 
-** Gitorious configuration must in /etc/gitorious.conf
+** Gitorious configuration
    This plugin needs to know how to connect to your Gitorious
    database, and it will need the file =/etc/gitorious.conf= to be
    present on your server. This file should be in a format that makes
@@ -42,3 +42,7 @@ GITORIOUS_ROOT=/path/to/gitorious
 
    pointing to where Gitorious is installed. You may also supply a
    =RAILS_ENV= in there to not use the default of =production=.
+
+   You can also configure the scripts through environment variables,
+   which may be useful for development, e.g.:
+   `env GITORIOUS_HOME=/var/www/gitorious RAILS_ENV=production gitorious-munin-plugins --try gitorious_repositories`
