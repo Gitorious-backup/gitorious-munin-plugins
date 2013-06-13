@@ -27,7 +27,7 @@ EOS
       elsif global_options[:uninstall_given]
         uninstall_plugins(ARGV)
       elsif global_options[:try_given]
-        try_running(ARGV)
+        (ARGV[0] || "").split(",").each { |name| try_running(name) }
       end
     end
 
