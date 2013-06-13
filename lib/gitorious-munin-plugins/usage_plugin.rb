@@ -54,7 +54,9 @@ EOS
     end
 
     def try_running(name)
-      load Plugin.root.realpath + "#{name}.rb"
+      plugin = Plugin.root.realpath + "#{name}.rb"
+      abort("Unknown plugin #{name}, exiting. List valid plugins with -l.") if !plugin.exist?
+      load(plugin)
     end
 
     def extract_plugins_from_spec(spec)
