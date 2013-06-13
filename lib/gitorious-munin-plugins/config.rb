@@ -25,11 +25,15 @@ module GitoriousMuninPlugins
 
     # Fetch line matching #{key}= in /etc/gitorious.conf
     def fetch(key, default_value=nil)
+      return ENV[key] if ENV[key]
 
       begin
         config_file = File.read(GITORIOUS_CONF_PATH)
       rescue Errno::ENOENT
-        abort "Gitorious configuration file #{GITORIOUS_CONF_PATH} was not found, exiting"
+        abort <<-MSG
+Gitorious configuration file #{GITORIOUS_CONF_PATH} was not found, and
+environment variable #{key} was not set, exiting.
+        MSG
       end
 
       result = config_file.scan(/^#{key}=(.*)$/).flatten.first
