@@ -8,17 +8,15 @@ module GitoriousMuninPlugins
     end
 
     def run
-      if plugins.any? {|plugin| plugin.named?(called_as)}
+      if plugins.any? {|plugin| plugin.named?(called_as) }
         load_plugin(called_as)
       else
         UsagePlugin.new(plugins).run
       end
     end
 
-
     def load_plugin(name)
       load Plugin.root.realpath + "#{name}.rb"
     end
   end
-
 end

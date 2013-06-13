@@ -10,10 +10,6 @@ require "gitorious-munin-plugins/memory_gauge"
 require "term/ansicolor"
 require "trollop"
 
-
-
-
-
 all_plugins = GitoriousMuninPlugins::Plugin.all
 called_as = Pathname($0).basename.to_s
 cli = GitoriousMuninPlugins::Cli.new(all_plugins, called_as)
